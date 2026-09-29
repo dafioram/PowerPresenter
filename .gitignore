@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Generated at build time from node_modules (npm run prepare:assets)
+public/fonts/
+public/viewer/
+src/generated/
+
+# Test output
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+coverage/
+
+# Editors and OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs and local env
+*.log
+npm-debug.log*
+.env
+.env.*

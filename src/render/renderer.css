@@ -1,0 +1,70 @@
+/* Renderer styles. Shared by the editor, viewer, print view, image export and
+   exported HTML (spec §3.2). Everything is scoped under .pe-slide. */
+.pe-slide {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  contain: layout style;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  line-height: 1.2;
+  color: #000;
+  isolation: isolate;
+  hyphens: manual;
+  font-kerning: normal;
+}
+.pe-slide[data-mode='edit'] { overflow: visible; }
+.pe-slide *, .pe-slide *::before, .pe-slide *::after { box-sizing: border-box; }
+.pe-bg { position: absolute; inset: 0; z-index: 0; }
+.pe-layer { position: absolute; inset: 0; pointer-events: none; }
+.pe-el { position: absolute; margin: 0; pointer-events: auto; }
+.pe-slide[data-mode='edit'] .pe-el { pointer-events: none; }
+
+.pe-el-text { display: flex; flex-direction: column; overflow: visible; }
+.pe-frame { position: absolute; inset: 0; pointer-events: none; }
+.pe-flow { margin: 0; padding: 0; min-width: 0; overflow-wrap: break-word; word-break: normal; white-space: pre-wrap; font-weight: inherit; font-size: inherit; }
+h2.pe-flow, h3.pe-flow { font: inherit; letter-spacing: inherit; }
+.pe-flow .pe-p { display: block; margin: 0; padding: 0; position: relative; }
+.pe-flow .pe-list { list-style: none; margin: 0; padding: 0; }
+.pe-flow .pe-li-holder { list-style: none; margin: 0; padding: 0; }
+.pe-flow .pe-li { list-style: none; }
+.pe-flow .pe-marker { position: absolute; top: 0; display: inline-block; white-space: nowrap; text-align: start; }
+.pe-flow .pe-prompt { opacity: 0.45; }
+.pe-flow .pe-prompt, .pe-flow .pe-prompt * { color: #64748b !important; }
+.pe-flow a.pe-link { color: inherit; text-decoration: inherit; }
+.pe-flow a.pe-link:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; border-radius: 2px; }
+.pe-flow br { line-height: inherit; }
+
+.pe-el-shape { overflow: visible; }
+.pe-shape-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+.pe-shape-text { position: absolute; display: flex; flex-direction: column; overflow: visible; }
+
+.pe-el-image { overflow: visible; }
+.pe-img-clip { position: absolute; inset: 0; overflow: hidden; }
+.pe-img { position: absolute; max-width: none; max-height: none; user-select: none; -webkit-user-drag: none; }
+.pe-img-border { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.pe-image-slot { border: 2px dashed #94a3b8; background: rgba(148, 163, 184, 0.12); display: flex; align-items: center; justify-content: center; }
+.pe-slot-label { font: 500 16px/1.3 system-ui, sans-serif; color: #64748b; text-align: center; padding: 8px; }
+
+.pe-el-line { position: absolute; overflow: visible; pointer-events: none; }
+.pe-el-line .pe-line-hit { pointer-events: stroke; }
+
+.pe-el-table { height: auto; }
+.pe-table { border-collapse: collapse; table-layout: fixed; border-spacing: 0; }
+.pe-table th, .pe-table td { text-align: start; font-weight: inherit; overflow-wrap: break-word; }
+
+.pe-el-chart { overflow: visible; }
+.pe-chart-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+
+.pe-el-video { background: #000; overflow: hidden; }
+.pe-video, .pe-video-poster { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.pe-video-empty { background: #0f172a; }
+.pe-video-badge { position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; margin: -36px 0 0 -36px; border-radius: 50%; background: rgba(15, 23, 42, 0.65); }
+.pe-video-badge::after { content: ''; position: absolute; left: 29px; top: 22px; border-style: solid; border-width: 14px 0 14px 22px; border-color: transparent transparent transparent #fff; }
+.pe-captions { position: absolute; left: 5%; right: 5%; bottom: 6%; text-align: center; pointer-events: none; z-index: 5; }
+.pe-captions span { display: inline; background: rgba(0, 0, 0, 0.78); color: #fff; font: 500 28px/1.35 system-ui, sans-serif; padding: 2px 8px; box-decoration-break: clone; -webkit-box-decoration-break: clone; white-space: pre-line; }
+
+.pe-sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+.pe-has-link { cursor: pointer; }
+.pe-has-link:focus-visible { outline: 3px solid #2563eb; outline-offset: 2px; }

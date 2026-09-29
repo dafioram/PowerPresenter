@@ -1,0 +1,77 @@
+/* Viewer (presentation mode, exported HTML) and presenter view. */
+.pv { position: absolute; inset: 0; background: #000; overflow: hidden; outline: none; user-select: none; -webkit-user-select: none; touch-action: none; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+.pv.is-idle { cursor: none; }
+.pv.is-laser { cursor: none; }
+.pv-main { position: absolute; inset: 0; }
+.pv-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.pv-slide { position: absolute; inset: 0; background: #000; }
+.pv-slide > .pe-slide { position: absolute; left: 0; top: 0; }
+.pv-blank { position: absolute; inset: 0; display: none; z-index: 20; }
+.pv-blank.is-on { display: block; }
+.pv-blank.is-black { background: #000; }
+.pv-blank.is-white { background: #fff; }
+.pv-end { position: absolute; inset: 0; display: none; z-index: 15; background: #000; color: #e5e7eb; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+.pv-end.is-on { display: flex; }
+.pv-end-title { font-size: 28px; font-weight: 600; margin: 0 0 8px; }
+.pv-end-hint { font-size: 15px; color: #9ca3af; margin: 0; }
+.pv-laser { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: radial-gradient(circle, #ff3b30 0 40%, rgba(255, 59, 48, 0.4) 60%, rgba(255, 59, 48, 0) 72%); display: none; z-index: 30; pointer-events: none; box-shadow: 0 0 12px 4px rgba(255, 59, 48, 0.55); }
+.pv-laser.is-on { display: block; }
+.pv-goto { position: absolute; left: 50%; top: 24px; transform: translateX(-50%); background: rgba(17, 24, 39, 0.88); color: #fff; padding: 8px 16px; border-radius: 10px; font-size: 18px; font-weight: 600; display: none; z-index: 40; }
+.pv-goto.is-on { display: block; }
+.pv-controls { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; align-items: center; gap: 2px; background: rgba(17, 24, 39, 0.86); color: #f9fafb; border-radius: 12px; padding: 4px 6px; z-index: 50; transition: opacity 0.25s; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4); }
+.pv.is-idle .pv-controls { opacity: 0; pointer-events: none; }
+.pv-btn { width: 38px; height: 38px; border: 0; background: transparent; color: inherit; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.pv-btn:hover { background: rgba(255, 255, 255, 0.14); }
+.pv-btn:focus-visible { outline: 2px solid #93c5fd; outline-offset: 0; }
+.pv-btn[aria-pressed='true'] { background: rgba(147, 197, 253, 0.25); }
+.pv-btn[hidden] { display: none; }
+.pv-counter { min-width: 64px; text-align: center; font-size: 14px; font-variant-numeric: tabular-nums; color: #d1d5db; }
+.pv-overview { position: absolute; inset: 0; background: rgba(3, 7, 18, 0.94); z-index: 45; display: none; overflow: auto; padding: 32px; }
+.pv-overview.is-on { display: block; }
+.pv-overview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+.pv-ov-item { background: transparent; border: 2px solid transparent; border-radius: 8px; padding: 4px; cursor: pointer; color: #e5e7eb; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; font: 13px system-ui, sans-serif; }
+.pv-ov-item:hover, .pv-ov-item:focus-visible { border-color: #93c5fd; outline: none; }
+.pv-ov-item.is-current { border-color: #818cf8; }
+.pv-ov-item.is-hidden .pv-ov-thumb { opacity: 0.4; }
+.pv-ov-thumb { position: relative; overflow: hidden; border-radius: 4px; background: #111; }
+.pv-ov-thumb > .pe-slide { position: absolute; left: 0; top: 0; }
+.pv-ov-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px; }
+.pv-start { position: absolute; inset: 0; z-index: 60; background: rgba(0, 0, 0, 0.75); display: flex; align-items: center; justify-content: center; }
+.pv-start-btn { font: 600 20px system-ui, sans-serif; padding: 14px 28px; border-radius: 12px; border: 0; background: #6366f1; color: #fff; cursor: pointer; }
+
+/* presenter window */
+.pp-body { margin: 0; background: #0b0d12; color: #e5e7eb; font: 15px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; height: 100vh; overflow: hidden; }
+.pp { display: grid; grid-template-columns: 1.6fr 1fr; grid-template-rows: 1fr auto; height: 100vh; gap: 14px; padding: 14px; box-sizing: border-box; }
+.pp-current { display: flex; flex-direction: column; min-height: 0; }
+.pp-side { display: flex; flex-direction: column; min-height: 0; gap: 8px; }
+.pp-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #9ca3af; font-weight: 700; margin-bottom: 6px; }
+.pp-slide-box { flex: 1; min-height: 0; display: flex; align-items: flex-start; justify-content: center; }
+.pp-slide-box.is-next { flex: 0 0 34%; }
+.pp-holder { position: relative; overflow: hidden; border-radius: 6px; box-shadow: 0 0 0 1px #374151; background: #000; }
+.pp-holder > .pe-slide { position: absolute; left: 0; top: 0; }
+.pp-end { color: #9ca3af; padding: 40px; }
+.pp-notes-head { display: flex; align-items: center; gap: 6px; }
+.pp-notes-head .pp-label { flex: 1; margin: 0; }
+.pp-notes { flex: 1; overflow: auto; background: #111827; border-radius: 8px; padding: 12px 16px; line-height: 1.5; }
+.pp-notes p { margin: 0 0 0.6em; }
+.pp-notes a { color: #93c5fd; }
+.pp-notes-empty { color: #6b7280; font-style: italic; }
+.pp-bar { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; background: #111827; border-radius: 10px; padding: 8px 12px; flex-wrap: wrap; }
+.pp-timer { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 88px; }
+.pp-clock, .pp-counter { color: #9ca3af; font-variant-numeric: tabular-nums; }
+.pp-spacer { flex: 1; }
+.pp-btn { border: 1px solid #374151; background: #1f2937; color: #f9fafb; border-radius: 8px; padding: 7px 12px; cursor: pointer; font: inherit; }
+.pp-btn:hover { background: #374151; }
+.pp-btn.is-primary { background: #4f46e5; border-color: #4f46e5; }
+.pp-btn[aria-pressed='true'] { background: #312e81; }
+.pp-jump { background: #1f2937; color: #f9fafb; border: 1px solid #374151; border-radius: 8px; padding: 6px; max-width: 240px; }
+
+/* standalone HTML page */
+html.pe-standalone, html.pe-standalone body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+#pe-root { position: fixed; inset: 0; }
+@media print {
+  html.pe-standalone, html.pe-standalone body { height: auto; overflow: visible; background: #fff; }
+  #pe-root { display: none; }
+  #pe-print { display: block !important; }
+}
+#pe-print { display: none; }
